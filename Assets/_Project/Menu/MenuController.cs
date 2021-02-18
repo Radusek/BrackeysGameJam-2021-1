@@ -17,6 +17,8 @@ public class MenuController : MonoBehaviour
     private Stack<GameObject> menuStack;
     private int animationLocks;
 
+    public bool IsAtRootSubmenu => menuStack.Count == 1;
+
 
     private void Awake()
     {
@@ -24,10 +26,30 @@ public class MenuController : MonoBehaviour
         menuStack.Push(menuRoot);
     }
 
+    private void OnEnable() => MakeSubmenuInteractable(menuStack.Peek(), true);
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && menuStack.Count > 1 && animationLocks == 0)
             Back();
+    }
+
+    public void ResetMenu()
+    {
+        while (menuStack.Count > 1)
+        {
+            menuStack.Pop().SetActive(false);
+        }
+
+        menuStack.Peek().transform.position = centerPos.transform.position;
+        menuStack.Peek().SetActive(true);
+    }
+
+    public void ShowRoot()
+    {
+        var submenu = menuStack.Peek();
+        submenu.SetActive(true);
+        AnimateSubmenu(submenu, centerPos, topPos);
     }
 
     public void SelectSubmenu(GameObject submenu)
