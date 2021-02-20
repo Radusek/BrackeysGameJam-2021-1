@@ -15,7 +15,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Transform bottomPos;
  
     private Stack<GameObject> menuStack;
-    private int animationLocks;
+    public int AnimationLocks { get; private set; }
 
     public bool IsAtRootSubmenu => menuStack.Count == 1;
 
@@ -30,7 +30,7 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && menuStack.Count > 1 && animationLocks == 0)
+        if (Input.GetKeyDown(KeyCode.Escape) && menuStack.Count > 1 && AnimationLocks == 0)
             Back();
     }
 
@@ -67,7 +67,7 @@ public class MenuController : MonoBehaviour
     private void HideCurrentOnSelect()
     {
         var submenu = menuStack.Peek();
-        AnimateSubmenu(submenu, topPos).OnComplete(() => { submenu.SetActive(false); animationLocks--; });
+        AnimateSubmenu(submenu, topPos).OnComplete(() => { submenu.SetActive(false); AnimationLocks--; });
     }
 
     private void OpenSubmenu(GameObject submenu)
@@ -80,7 +80,7 @@ public class MenuController : MonoBehaviour
     private void HideCurrentOnBack()
     {
         var submenu = menuStack.Pop();
-        AnimateSubmenu(submenu, bottomPos).OnComplete(() => { submenu.SetActive(false); animationLocks--; });
+        AnimateSubmenu(submenu, bottomPos).OnComplete(() => { submenu.SetActive(false); AnimationLocks--; });
     }
 
     private void OpenPreviousSubmenu()
@@ -100,9 +100,9 @@ public class MenuController : MonoBehaviour
 
     private Tween AnimateSubmenu(GameObject submenu, Transform destination, Transform origin = null)
     {
-        animationLocks++;
+        AnimationLocks++;
         MakeSubmenuInteractable(submenu, false);
         float fromValue = origin ? origin.transform.position.y : submenu.transform.position.y;
-        return submenu.transform.DOMoveY(destination.transform.position.y, animationDuration).From(fromValue).SetEase(animationEase).SetUpdate(true).OnComplete(() => { MakeSubmenuInteractable(submenu, true); animationLocks--; });
+        return submenu.transform.DOMoveY(destination.transform.position.y, animationDuration).From(fromValue).SetEase(animationEase).SetUpdate(true).OnComplete(() => { MakeSubmenuInteractable(submenu, true); AnimationLocks--; });
     }
 }

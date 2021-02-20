@@ -24,7 +24,7 @@ public class GamePause : MonoBehaviour
         {
             if (!menuController.gameObject.activeSelf)
                 SetGamePaused(true);
-            else if(menuController.IsAtRootSubmenu)
+            else if (menuController.IsAtRootSubmenu && menuController.AnimationLocks < 1)
                 SetGamePaused(false);
         }
     }
