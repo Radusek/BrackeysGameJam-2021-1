@@ -1,23 +1,22 @@
-﻿using UnityEngine;
-
-namespace AI
+﻿public class Selector : Node
 {
-    [CreateAssetMenu(menuName = "Custom/AI/Selector")]
-    public class Selector : Node
+    private readonly Node[] nodes;
+
+
+    public Selector(params Node[] nodes)
     {
-        [SerializeField] private  Node[] nodes;
+        this.nodes = nodes;
+    }
 
-
-        public override NodeState Evaluate(EnemyAI instance)
+    public override NodeState Evaluate()
+    {
+        foreach (var node in nodes)
         {
-            foreach (var node in nodes)
-            {
-                var state = node.Evaluate(instance);
-                if (state != NodeState.Failure)
-                    return state;
-            }
-
-            return NodeState.Failure;
+            var state = node.Evaluate();
+            if (state != NodeState.Failure)
+                return state;
         }
+
+        return NodeState.Failure;
     }
 }

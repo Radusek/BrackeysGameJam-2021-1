@@ -1,26 +1,24 @@
-﻿using UnityEngine;
-
-namespace AI
+﻿public class Inverter : Node
 {
-    [CreateAssetMenu(menuName = "Custom/AI/Inverter")]
-    public class Inverter : Node
+    private readonly Node node;
+
+
+    public Inverter(Node node)
     {
-        [SerializeField] private  Node node;
+        this.node = node;
+    }
 
-
-        public override NodeState Evaluate(EnemyAI instance)
+    public override NodeState Evaluate()
+    {
+        switch (node.Evaluate())
         {
-            switch (node.Evaluate(instance))
-            {
-                case NodeState.Failure:
-                    return NodeState.Success;
-                case NodeState.Running:
-                    return NodeState.Running;
-                case NodeState.Success:
-                    return NodeState.Failure;
-                default:
-                    return NodeState.Failure;
-            }
+            case NodeState.Failure:
+                return NodeState.Success;
+            case NodeState.Running:
+                return NodeState.Running;
+            case NodeState.Success:
+            default:
+                return NodeState.Failure;
         }
     }
 }

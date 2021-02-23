@@ -1,16 +1,11 @@
-﻿using UnityEngine;
-
-namespace AI
+﻿public abstract class Node
 {
-    public abstract class Node : ScriptableObject
-    {
-        public abstract NodeState Evaluate(EnemyAI instance);
-    }
-
-    public enum NodeState
-    {
-        Failure,
-        Running,
-        Success
-    }
+    public abstract NodeState Evaluate();
+}
+    
+public enum NodeState
+{
+    Failure,
+    Running,
+    Success
 }

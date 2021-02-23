@@ -47,9 +47,10 @@ public class CharacterMovement : MonoBehaviour
     public void AddMaxJumps(int amount) => maxJumps += amount;
     public void AddJumpForce(float amount) => jumpForce += amount;
 
-    public void Jump()
+    public void Jump(bool automaticEnhancements = false)
     {
-        lastJumpIntentTime = Time.time;
+        if (automaticEnhancements)
+            lastJumpIntentTime = Time.time;
         if (jumpsLeft == 0)
             return;
 
@@ -67,6 +68,7 @@ public class CharacterMovement : MonoBehaviour
         TryInvokeTooEarlyJump();
 
         rb.AddForceTimesDrag(walkSpeed * WalkInput * Vector2.right);
+        WalkInput = 0f;
     }
 
     private void TryInvokeTooEarlyJump()

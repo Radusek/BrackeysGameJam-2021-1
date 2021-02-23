@@ -44,7 +44,10 @@ public class GamePause : MonoBehaviour
     private void ManageTimeScale(bool state)
     {
         if (state)
+        {
             prePauseTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
         else
             Time.timeScale = prePauseTimeScale;
     }

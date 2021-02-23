@@ -1,40 +1,33 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI
 {
     public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] private Node behaviour;
+        [SerializeField] private BehaviourProvider behaviourProvider;
 
-        private Dictionary<System.Type, Component> components;
+        private Node behaviour;
 
-        public float SleepingEndTime { get; set; }
-
-
-        private void Awake()
-        {
-            components = new Dictionary<System.Type, Component>();
-            foreach (var component in GetComponents<Component>())
-            {
-                components[component.GetType()] = component;
-            }
-        }
 
         private IEnumerator Start()
         {
+            AssignNewBehaviour();
             yield return new WaitForSeconds(1f);
             while (true)
             {
                 yield return null;
-                behaviour.Evaluate(this);
+                if (GamePause.Instance.IsPaused)
+                    continue;
+
+                behaviour.Evaluate();
             }
         }
 
-        public T TakeComponent<T>() where T : Component
+        [ContextMenu("Get Behaviour")]
+        public void AssignNewBehaviour()
         {
-            return components[typeof(T)] as T;
+            behaviour = behaviourProvider.GetBehaviour(transform);
         }
     }
 }

@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 6998872889494513239}
   - component: {fileID: 6998872889494513238}
   - component: {fileID: 6998872889494513235}
-  - component: {fileID: 6998872889494513232}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -127,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b877e31725a54eb40baa46c65bd6b582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11400000, guid: 9f905f21c5f7b3f4f90c8f63556a1ffa, type: 2}
+  behaviourProvider: {fileID: 11400000, guid: bc9bfce18772ef144a2d729b7f0666ab, type: 2}
 --- !u!114 &6998872889494513238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,21 +173,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   edgeCheckBoxSize: {x: 0.5, y: 0.5}
-  edgeCheckBoxOffset: {x: 1, y: -0.5}
+  edgeCheckBoxOffset: {x: 0.8, y: -0.5}
   wallCheckBoxSize: {x: 1, y: 0.25}
   wallCheckBoxOffset: {x: 1, y: 0}
---- !u!114 &6998872889494513232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998872889494513241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae10c97a82bec34aa7bae70e342edd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6998872890630316048
 GameObject:
   m_ObjectHideFlags: 0

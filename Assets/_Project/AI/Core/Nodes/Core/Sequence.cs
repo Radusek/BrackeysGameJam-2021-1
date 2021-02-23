@@ -1,31 +1,29 @@
-﻿using UnityEngine;
-
-namespace AI
+﻿public class Sequence : Node
 {
-    [CreateAssetMenu(menuName = "Custom/AI/Sequence")]
-    public class Sequence : Node
+    private readonly Node[] nodes;
+
+
+    public Sequence(params Node[] nodes)
     {
-        [SerializeField] private  Node[] nodes;
+        this.nodes = nodes;
+    }
 
-
-        public override NodeState Evaluate(EnemyAI instance)
+    public override NodeState Evaluate()
+    {
+        foreach (var node in nodes)
         {
-            bool isAnyRunning = false;
-            foreach (var node in nodes)
+            switch (node.Evaluate())
             {
-                switch (node.Evaluate(instance))
-                {
-                    case NodeState.Failure:
-                        return NodeState.Failure;
-                    case NodeState.Running:
-                        isAnyRunning = true;
-                        break;
-                    case NodeState.Success:
-                        break;
-                }
+                case NodeState.Failure:
+                    return NodeState.Failure;
+                case NodeState.Running:
+                    return NodeState.Running;
+                case NodeState.Success:
+                    break;
             }
-
-            return isAnyRunning ? NodeState.Running : NodeState.Success;
         }
+
+        return  NodeState.Success;
     }
 }
+
